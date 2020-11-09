@@ -20,12 +20,19 @@ func NewTask() Task {
 	t := Task{}
 	return t
 }
+func NewAllTasks() Tasks {
+	ts := Tasks{}
+	ts.tasks = []Task{}
+	return ts
+}
 
 type TaskManager interface {
 	getDetails()
 	getAllTasks()
-	addTask()
+	AddTask()
 	iscompleted()
+	DeleteTask()
+	ChangeTask()
 }
 
 // Tasks of Task
@@ -36,13 +43,13 @@ type Tasks struct {
 func (t *Tasks) getAllTasks() []Task {
 	return t.tasks
 }
-func (ts *Tasks) addTask(t *Task) {
+func (ts *Tasks) AddTask(t *Task) {
 	ts.tasks = append(ts.tasks, *t)
 }
-func (ts *Tasks) deleteTask(id int) {
+func (ts *Tasks) DeleteTask(id int) {
 	ts.tasks = append(ts.tasks[:id-1], ts.tasks[id:]...)
 }
-func (ts *Tasks) changeTask(id int) {
+func (ts *Tasks) ChangeTask(id int) {
 	update := &ts.tasks[id-1]
 	if update.id == id {
 		getDetails(update, ts)
@@ -95,7 +102,7 @@ func main() {
 		switch input {
 		case 1:
 			getDetails(task, &tasks)
-			tasks.addTask(task)
+			tasks.AddTask(task)
 			break
 		case 2:
 			fmt.Print("Please enter the title of task you want to update:")
@@ -104,7 +111,7 @@ func main() {
 			d := tasks.getAllTasks()
 			for _, v := range d {
 				if v.title == title {
-					tasks.changeTask(v.id)
+					tasks.ChangeTask(v.id)
 					fmt.Println("Successfully changed!")
 					doesntexist = false
 					break
@@ -123,7 +130,7 @@ func main() {
 				fmt.Println("v.title", v.title)
 				fmt.Println("entered title", title)
 				if title == v.title {
-					tasks.deleteTask(v.id)
+					tasks.DeleteTask(v.id)
 					fmt.Println("DELETED successfully")
 					doesntexist = false
 					break
