@@ -49,8 +49,9 @@ func NewAllContacts() AllContacts {
 	c.contacts = []Contact{}
 	return c
 }
-func (c *AllContacts) addContact(newContact *Contact) {
+func (c *AllContacts) addContact(newContact *Contact) *Contact {
 	c.contacts = append(c.contacts, *newContact)
+	return newContact
 
 }
 func (c *AllContacts) updateContact(newCon *Contact) *Contact {
