@@ -39,13 +39,14 @@ func (c *AllContacts) AddContact(nc *Contact) (*Contact, error) {
 	return nc, nil
 }
 
-func (c *AllContacts) UpdateContact(nc *Contact, id int) *Contact {
+func (c *AllContacts) UpdateContact(nc *Contact, id int) (*Contact, error) {
 	sqlStatement := `UPDATE contact SET firstname=$1, lastname=$2, phonenumber=$3 WHERE id=$4`
 	_, err := c.db.Exec(sqlStatement, nc.firstName, nc.lastName, nc.phoneNumber, id)
 	if err != nil {
 		panic(err)
+		return nil, err
 	}
-	return nc
+	return nc, nil
 }
 func (c *AllContacts) DeleteContact(id int) error {
 	sqlDelete := `DELETE FROM contact WHERE id=$1`
@@ -92,7 +93,8 @@ func main() {
 	cs, err := NewAllContacts()
 	// _, err = cs.AddContact(&c)
 	// newf := cs.UpdateContact(&c, 2)
-	// newf := cs.DeleteContact(16)
+	// ret := cs.DeleteContact(12)
+	// fmt.Println("Delete return:", ret)
 	_, err = cs.GetAllcontacts()
 	if err != nil {
 		log.Println(err)
