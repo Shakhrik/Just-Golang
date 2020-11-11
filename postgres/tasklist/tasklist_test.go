@@ -5,38 +5,38 @@ import (
 	"time"
 )
 
-var all = NewAllTasks()
+var all, er = NewAllTasks()
 
 func TestAddTask(t *testing.T) {
-	var task = Task{"Greeting", "Hello hello", time.Now(), false, 1}
-	var before int = len(all.tasks)
-	all.AddTask(&task)
-	var after int = len(all.tasks)
-	if after-before != 1 {
+	task := Task{"Test Title", "Test Body", time.Now(), false, 1}
+	_, e := all.AddTask(&task)
+	if e != nil {
 		t.Error("Error! Can't be added")
 	}
 }
+
 func TestDeleteTask(t *testing.T) {
-	all.tasks[0] = Task{"Laptop", "Hello again", time.Now(), true, 1}
-	var before int = len(all.tasks)
-	all.DeleteTask(1)
-	var after int = len(all.tasks)
-	if before-after != 1 {
-		t.Error("Error! Can't be deleted")
+	bef, _ := all.GetallTasks()
+	var id int = 1
+	e := all.DeleteTask(id)
+	af, _ := all.GetallTasks()
+	if e != nil && len(bef)-len(af) != 1 {
+		t.Error("Error! Can't be delete")
 	}
 }
 
 func TestChangeTask(t *testing.T) {
-	task := Task{"Laptop", "Hello again", time.Now(), true, 1}
-	all.tasks = append(all.tasks, task)
-	all.ChangeTask(1)
-	if task == all.tasks[0] {
+	var id int = 2
+	nt := Task{"Changed Test Title", "Changed Task Body", time.Now(), true, id}
+	_, err := all.ChangeTask(id, &nt)
+	if err != nil {
 		t.Error("Error! Can't be changed")
 	}
-
 }
+
 func TestGetAllTasks(t *testing.T) {
-	if len(all.tasks) != len(all.getAllTasks()) {
-		t.Error("Error! Getalltasks function is not workin properly")
+	_, er := all.GetallTasks()
+	if er != nil {
+		t.Error("Error! Can't be got All the tasks")
 	}
 }
