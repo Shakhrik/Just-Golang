@@ -10,7 +10,6 @@ func TestAddingNewContact(t *testing.T) {
 	if saved.id != c.id {
 		t.Error("Error! Can't be added")
 	}
-
 }
 func TestUpdateContact(t *testing.T) {
 	all.contacts[0] = Contact{"Barello", "Tomas", "53443344", 0}
