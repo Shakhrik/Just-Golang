@@ -19,10 +19,9 @@ func main() {
 		panic(er)
 	}
 	client := proto.NewAddServiceClient(conn)
-	g := gin.Default()
-	g.GET("/add/:a/:b", func(ctx *gin.Context) {
+	router := gin.Default()
+	router.GET("/add/:a/:b", func(ctx *gin.Context) {
 		a, err := strconv.ParseUint(ctx.Param("a"), 10, 64)
-		log.Println(a)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid Parameter A"})
 			return
@@ -41,7 +40,7 @@ func main() {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error fa": err.Error()})
 		}
 	})
-	g.GET("/multip/:a/:b", func(ctx *gin.Context) {
+	router.GET("/multip/:a/:b", func(ctx *gin.Context) {
 		a, err := strconv.ParseUint(ctx.Param("a"), 10, 64)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid Parameter A"})
@@ -61,7 +60,7 @@ func main() {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		}
 	})
-	if err := g.Run(":8080"); err != nil {
+	if err := router.Run(":8080"); err != nil {
 		log.Fatalf("Failed to run server on 8080: %v", err)
 	}
 }

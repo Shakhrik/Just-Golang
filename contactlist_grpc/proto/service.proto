@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package proto;
+import "google/protobuf/empty.proto";
+
+message Contact{
+    int64 id=1;
+    string firstName =2;
+    string lastName = 3;
+    string phoneNumber = 4;
+}
+message ContactId{
+    int64 id = 1;
+}
+message Status{
+    string status =1;
+}
+message Contacts{
+    repeated Contact contacts = 1;
+}
+service ContactManager{
+    rpc Add (Contact) returns (Contact);
+    rpc Update (Contact) returns (Status);
+    rpc Delete (ContactId) returns (Status);
+    rpc GetAllContacts (google.protobuf.Empty) returns (Contacts);
+}
