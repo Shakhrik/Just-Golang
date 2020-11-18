@@ -11,7 +11,7 @@ import (
 type ContactManager interface {
 	AddContact(c *cont.Contact) error
 	UpdateContact(c *cont.Contact, id int64) error
-	DeleteContact(id int64)
+	DeleteContact(id int64) error
 	GetAllcontacts() ([]*cont.Contact, error)
 }
 type AllContacts struct {

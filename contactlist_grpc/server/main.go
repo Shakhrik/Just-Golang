@@ -6,7 +6,7 @@ import (
 	"context"
 
 	"github.com/Shakhrik/Just-Golang/contactlist_grpc/model"
-	proto "github.com/Shakhrik/Just-Golang/contactlist_grpc/proto"
+	"github.com/Shakhrik/Just-Golang/contactlist_grpc/proto"
 	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -46,6 +46,7 @@ func (s *server) Update(ctx *context.Context, nc *proto.Contact) (*proto.Status,
 }
 func (s *server) Delete(ctx *context.Context, id *proto.ContactId) (*proto.Status, error) {
 	s.cs.DeleteContact(id.GetId())
+
 	return &proto.Status{Status: "deleted successfully"}, nil
 }
 func (s *server) GetAllContacts(ctx context.Context, e *empty.Empty) (*proto.Contacts, error) {
